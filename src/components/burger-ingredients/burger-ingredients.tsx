@@ -1,5 +1,5 @@
 import React from 'react';
-import ingredientsStyles from './burger-ingredients.module.css';
+import burgerIngredientsStyles from './burger-ingredients.module.css';
 
 function BurgerIngredients() {
   return (

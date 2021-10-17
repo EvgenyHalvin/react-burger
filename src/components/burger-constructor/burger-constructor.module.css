@@ -1,4 +1,11 @@
 .burgerConstructor {
   display: flex;
   flex-direction: column;
+  width: 600px;
+}
+
+.title {
+  line-height: 40px;
+  color: #F2F2F3;
+  margin: 40px auto 20px 0;
 }
