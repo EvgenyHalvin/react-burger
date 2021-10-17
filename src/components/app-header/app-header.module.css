@@ -1,0 +1,14 @@
+.appHeaderWrap {
+  display: flex;
+  width: 100%;
+
+  background-color: #1C1C21;
+}
+
+.appHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 16px auto;
+  width: 1240px;
+}
