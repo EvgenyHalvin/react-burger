@@ -8,13 +8,13 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
   return (
-    <div className={appHeaderStyles.appHeaderWrap}>
+    <header className={appHeaderStyles.appHeaderWrap}>
       <section className={appHeaderStyles.appHeader}>
         <NavBar />
         <Logo />
         <Profile />
       </section>
-    </div>
+    </header>
   )
 }
 

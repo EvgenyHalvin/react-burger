@@ -1,0 +1,4 @@
+.burgerConstructor {
+  display: flex;
+  flex-direction: column;
+}
