@@ -1,0 +1,14 @@
+.orderList {
+  height: calc(3*80px + 2*16px);
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.orderList::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2F2F37;
+}
+
+.orderList::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}

@@ -8,7 +8,7 @@ function Main({ items }) {
   return (
     <main className={mainStyles.main}>
       <BurgerConstructor items={items} />
-      <BurgerIngredients />
+      <BurgerIngredients items={items} />
     </main>
   );
 }

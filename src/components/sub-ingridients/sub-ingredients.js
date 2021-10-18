@@ -3,6 +3,7 @@ import subIngredientsStyles from "./sub-ingredients.module.css";
 
 import Ingredient from "../ingredient/ingredient";
 
+// Рендер ингредиентов на страницу в соответствующий раздел
 function SubIngridients({ items, type, message }) {
   return (
     <>

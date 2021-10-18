@@ -9,6 +9,7 @@ import api from "../../utils/api";
 function App() {
   const [ingredients, setIngredients] = useState([]);
 
+  // Загрузка данных об ингредиентах с сервера
   useEffect(() => {
     api
       .getIngredients()
