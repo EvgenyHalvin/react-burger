@@ -23,6 +23,8 @@ function OrderIngredient({ item, placeType }) {
               : "40px"
           }`,
           marginTop: `${placeType === "last" && "16px"}`,
+          marginRight: `${(placeType === "first" || placeType === "last") && "8px"}`,
+          marginLeft: `${(placeType === "first" || placeType === "last") && "auto"}`,
         }}
       >
         <div
