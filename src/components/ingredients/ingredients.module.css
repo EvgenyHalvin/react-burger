@@ -3,6 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   height: 55vh;
+  max-height: 700px;
   min-height: 380px;
   overflow: scroll;
   overflow-x:hidden;

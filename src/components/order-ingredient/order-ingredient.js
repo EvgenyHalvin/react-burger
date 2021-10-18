@@ -10,8 +10,15 @@ import {
 
 function OrderIngredient({ item, placeType }) {
   return (
-    <div className={orderIngredientStyles.component}>
-      {placeType !== "first" && placeType !== "last" && <DragIcon type="primary" />}
+    <div
+      className={orderIngredientStyles.component}
+      style={{
+        marginBottom: `${placeType === "last" && "0"}`,
+      }}
+    >
+      {placeType !== "first" && placeType !== "last" && (
+        <DragIcon type="primary" />
+      )}
       <div
         className={orderIngredientStyles.listItem}
         style={{
@@ -23,8 +30,12 @@ function OrderIngredient({ item, placeType }) {
               : "40px"
           }`,
           marginTop: `${placeType === "last" && "16px"}`,
-          marginRight: `${(placeType === "first" || placeType === "last") && "8px"}`,
-          marginLeft: `${(placeType === "first" || placeType === "last") && "auto"}`,
+          marginRight: `${
+            (placeType === "first" || placeType === "last") && "8px"
+          }`,
+          marginLeft: `${
+            (placeType === "first" || placeType === "last") && "auto"
+          }`,
         }}
       >
         <div
