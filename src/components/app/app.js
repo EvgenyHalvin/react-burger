@@ -71,8 +71,6 @@ function App() {
           <OrderDetails />
         </Modal>
       )}
-
-      <div id="react-modals"></div>
     </div>
   );
 }
