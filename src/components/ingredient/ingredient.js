@@ -3,9 +3,9 @@ import ingredientStyles from './ingredient.module.css';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function Ingredient({ item }) {
+function Ingredient({ item, openIngridientsModal }) {
   return(
-    <div className={ingredientStyles.ingredient}>
+    <div className={ingredientStyles.ingredient} onClick={() => openIngridientsModal(item)}>
       <Counter count={1} size="small" />
       <div className={ingredientStyles.image} style={{backgroundImage: `url(${item.image})`}}/>
       <div className={ingredientStyles.priceBlock}>

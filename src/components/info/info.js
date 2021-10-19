@@ -6,14 +6,14 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function Info() {
+function Info({ isOpen }) {
   return (
     <div className={infoStyles.info}>
       <p className="text text_type_main-large">610</p>
       <span className={infoStyles.icon}>
         <CurrencyIcon type="primary" />
       </span>
-      <Button type="primary" size="large">
+      <Button onClick={isOpen} type="primary" size="large">
         Оформить заказ
       </Button>
     </div>
