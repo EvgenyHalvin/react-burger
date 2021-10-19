@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import mainStyles from "./main.module.css";
 
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -17,6 +18,12 @@ function Main({ items, openIngridientsModal, openOrderDetailsModal }) {
       />
     </main>
   );
+}
+
+Main.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  openIngridientsModal: PropTypes.func,
+  openOrderDetailsModal: PropTypes.func
 }
 
 export default Main;

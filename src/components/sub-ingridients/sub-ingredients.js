@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import subIngredientsStyles from "./sub-ingredients.module.css";
 
 import Ingredient from "../ingredient/ingredient";
@@ -10,7 +11,13 @@ function SubIngridients({ items, type, message, openIngridientsModal }) {
       {items ? (
         items
           .filter((i) => i.type === type)
-          .map((item) => <Ingredient openIngridientsModal={openIngridientsModal} item={item} key={item._id} />)
+          .map((item) => (
+            <Ingredient
+              openIngridientsModal={openIngridientsModal}
+              item={item}
+              key={item._id}
+            />
+          ))
       ) : (
         <p
           className={`text text_type_main-default ${subIngredientsStyles.notification}`}
@@ -20,6 +27,11 @@ function SubIngridients({ items, type, message, openIngridientsModal }) {
       )}
     </>
   );
+}
+
+SubIngridients.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  message: PropTypes.string
 }
 
 export default SubIngridients;

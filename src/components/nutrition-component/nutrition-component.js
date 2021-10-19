@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import nutritionComponent from "./nutrition-component.module.css";
 
 function NutritionComponent({ unitName, valueAmount }) {
@@ -15,4 +16,10 @@ function NutritionComponent({ unitName, valueAmount }) {
     </>
   );
 }
+
+NutritionComponent.propTypes = {
+  unitName: PropTypes.string,
+  valueAmount: PropTypes.string
+}
+
 export default NutritionComponent;
