@@ -19,7 +19,7 @@ function NutritionComponent({ unitName, valueAmount }) {
 
 NutritionComponent.propTypes = {
   unitName: PropTypes.string,
-  valueAmount: PropTypes.string
+  valueAmount: PropTypes.number
 }
 
 export default NutritionComponent;
