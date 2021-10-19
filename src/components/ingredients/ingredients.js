@@ -17,7 +17,7 @@ function Ingredients({ items, openIngridientsModal }) {
       />
 
       <p className={`text text_type_main-medium ${ingredientsStyles.title}`}>
-        Основные блюда
+        Начинки
       </p>
       <SubIngridients
         openIngridientsModal={openIngridientsModal}
