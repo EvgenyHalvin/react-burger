@@ -4,7 +4,6 @@ import ingredientsDetailsStyles from "./ingredient-details.module.css";
 import NutritionComponent from "../nutrition-component/nutrition-component";
 
 function IngredientDetails({ item }) {
-  console.log(item)
   return (
     <div className={ingredientsDetailsStyles.details}>
       <div
@@ -18,7 +17,10 @@ function IngredientDetails({ item }) {
       </p>
       <ul className={ingredientsDetailsStyles.nutritionValues}>
         <li className={ingredientsDetailsStyles.value}>
-          <NutritionComponent unitName="Калории,ккал" valueAmount={item.calories} />
+          <NutritionComponent
+            unitName="Калории,ккал"
+            valueAmount={item.calories}
+          />
         </li>
         <li className={ingredientsDetailsStyles.value}>
           <NutritionComponent unitName="Белки, г" valueAmount={item.proteins} />
@@ -27,7 +29,10 @@ function IngredientDetails({ item }) {
           <NutritionComponent unitName="Жиры, г" valueAmount={item.fat} />
         </li>
         <li className={ingredientsDetailsStyles.value}>
-          <NutritionComponent unitName="Углеводы, г" valueAmount={item.carbohydrates} />
+          <NutritionComponent
+            unitName="Углеводы, г"
+            valueAmount={item.carbohydrates}
+          />
         </li>
       </ul>
     </div>

@@ -5,6 +5,7 @@ import AppHeader from "../app-header/app-header";
 import Main from "../main/main";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import OrderDetails from "../order-details/order-details";
 
 import api from "../../utils/api";
 
@@ -61,13 +62,16 @@ function App() {
           headerTitle="Детали ингредиента"
           isOpen={isIngredientDetailsOpen}
         >
-          <IngredientDetails item={modalInfo}/>
+          <IngredientDetails item={modalInfo} />
         </Modal>
       )}
 
       {isOrderDetails && (
-        <Modal onClose={closeModal} isOpen={isOrderDetails}></Modal>
+        <Modal onClose={closeModal} isOpen={isOrderDetails}>
+          <OrderDetails />
+        </Modal>
       )}
+
       <div id="react-modals"></div>
     </div>
   );
