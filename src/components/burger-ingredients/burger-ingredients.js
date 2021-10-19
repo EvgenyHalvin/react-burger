@@ -19,7 +19,7 @@ function BurgerIngredients({ items, openOrderDetailsModal }) {
       {firstAndLastItem && (
         <OrderIngredient item={firstAndLastItem} placeType="first" />
       )}
-      <OrderList placeType="middle" items={items} />
+      <OrderList placeType="middle" items={items} exception={firstAndLastItem} />
       {firstAndLastItem && (
         <OrderIngredient item={firstAndLastItem} placeType="last" />
       )}
