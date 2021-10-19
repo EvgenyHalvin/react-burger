@@ -12,7 +12,7 @@ function Modal({ children, headerTitle, onClose, isOpen }) {
   // Установка слушателя для Escape
   useEffect(() => {
     const close = (e) => {
-      if (e.keyCode === 27) {
+      if (e.key === 'Escape') {
         onClose();
       }
     };
