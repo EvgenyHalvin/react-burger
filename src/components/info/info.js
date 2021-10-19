@@ -9,7 +9,7 @@ import {
 function Info({ isOpen }) {
   return (
     <div className={infoStyles.info}>
-      <p className="text text_type_main-large">610</p>
+      <p className={`text text_type_main-large ${infoStyles.pticeText}`}>610</p>
       <span className={infoStyles.icon}>
         <CurrencyIcon type="primary" />
       </span>
