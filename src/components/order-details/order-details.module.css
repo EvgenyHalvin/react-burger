@@ -1,0 +1,36 @@
+.order {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  color: #F2F2F3;
+  margin: 16px auto 32px;
+  text-align: center;
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.orderText {
+  color: #F2F2F3;
+  text-align: center;
+}
+
+.text_wait {
+  padding: 0;
+  text-align: center;
+  margin: 0 auto 8px;
+}
+
+.text_start {
+  composes: text_wait;
+  margin: 0 auto 120px;
+  color: #8585AD;
+}
+
+.image {
+  margin: 60px auto;
+  width: 120px;
+  height: 120px;
+}

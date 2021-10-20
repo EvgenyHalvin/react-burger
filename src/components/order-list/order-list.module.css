@@ -1,0 +1,32 @@
+.orderList {
+  height: calc(2*80px + 1*16px);
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.orderList::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2F2F37;
+}
+
+.orderList::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+@media screen and (min-height: 800px) {
+  .orderList {
+    height: calc(3*80px + 2*16px);
+  }
+}
+
+@media screen and (min-height: 900px) {
+  .orderList {
+    height: calc(4*80px + 3*16px);
+  }
+}
+
+@media screen and (min-height: 1100px) {
+  .orderList {
+    height: calc(5*80px + 4*16px);
+  }
+}

@@ -1,0 +1,36 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.image {
+  width: 480px;
+  height: 240px;
+  margin: 0 auto 16px;
+}
+
+.name {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto 32px;
+  color: #F2F2F3;
+}
+
+.nutritionValues {
+  display: flex;
+  flex-direction: row;
+  max-width: 520px;
+  padding: 0;
+  margin: 0 auto 60px;
+}
+
+.value {
+  list-style-type: none;
+  margin-right: 20px;
+}
+
+.value:last-of-type {
+  margin-right: 0;
+}
