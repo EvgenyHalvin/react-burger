@@ -21,9 +21,9 @@ function Main({ items, openIngridientsModal, openOrderDetailsModal }) {
 }
 
 Main.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
-  openIngridientsModal: PropTypes.func,
-  openOrderDetailsModal: PropTypes.func
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  openIngridientsModal: PropTypes.func.isRequired,
+  openOrderDetailsModal: PropTypes.func.isRequired
 }
 
 export default Main;

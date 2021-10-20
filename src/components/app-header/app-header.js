@@ -1,5 +1,6 @@
 import React from 'react';
 import appHeaderStyles from './app-header.module.css';
+import PropTypes from 'prop-types';
 
 import NavBar from '../nav-bar/nav-bar';
 import Profile from '../profile/profile';
@@ -16,6 +17,10 @@ function AppHeader() {
       </section>
     </header>
   )
+}
+
+AppHeader.propTypes = {
+  Logo: PropTypes.element
 }
 
 export default AppHeader;

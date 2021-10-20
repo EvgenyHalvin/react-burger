@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
+import PropTypes from 'prop-types';
 
 import OrderIngredient from "../order-ingredient/order-ingredient";
 import OrderList from "../order-list/order-list";
@@ -26,6 +27,11 @@ function BurgerIngredients({ items, openOrderDetailsModal }) {
       <Info isOpen={openOrderDetailsModal} />
     </section>
   );
+}
+
+BurgerIngredients.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  openOrderDetailsModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

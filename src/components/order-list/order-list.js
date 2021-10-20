@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import orderListStyles from "./order-list.module.css";
 
 import OrderIngredient from "../order-ingredient/order-ingredient";
@@ -13,6 +14,10 @@ function OrderList({ items, exception }) {
         ))}
     </div>
   );
+}
+
+OrderList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default OrderList;

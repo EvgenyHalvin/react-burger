@@ -30,8 +30,10 @@ function SubIngridients({ items, type, message, openIngridientsModal }) {
 }
 
 SubIngridients.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
-  message: PropTypes.string
-}
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  type: PropTypes.string.isRequired,
+  message: PropTypes.string,
+  openIngridientsModal: PropTypes.func.isRequired,
+};
 
 export default SubIngridients;

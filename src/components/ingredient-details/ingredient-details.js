@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { shapeIngridientTypes } from '../../utils/types';
 import ingredientsDetailsStyles from "./ingredient-details.module.css";
 
 import NutritionComponent from "../nutrition-component/nutrition-component";
@@ -37,6 +39,10 @@ function IngredientDetails({ item }) {
       </ul>
     </div>
   );
+}
+
+IngredientDetails.propTypes = {
+  item: PropTypes.shape(shapeIngridientTypes).isRequired
 }
 
 export default IngredientDetails;

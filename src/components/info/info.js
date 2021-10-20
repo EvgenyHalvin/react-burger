@@ -1,5 +1,6 @@
 import React from "react";
 import infoStyles from "./info.module.css";
+import PropTypes from 'prop-types';
 
 import {
   CurrencyIcon,
@@ -18,6 +19,10 @@ function Info({ isOpen }) {
       </Button>
     </div>
   );
+}
+
+Info.propTypes = {
+  isOpen: PropTypes.func.isRequired
 }
 
 export default Info;

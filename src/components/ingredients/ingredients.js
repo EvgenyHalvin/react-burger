@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import ingredientsStyles from "./ingredients.module.css";
 
 import SubIngridients from "../sub-ingridients/sub-ingredients";
@@ -37,6 +38,11 @@ function Ingredients({ items, openIngridientsModal }) {
       />
     </div>
   );
+}
+
+Ingredients.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  openIngridientsModal: PropTypes.func.isRequired
 }
 
 export default Ingredients;

@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { shapeIngridientTypes } from '../../utils/types';
+
 import orderIngredientStyles from "./order-ingredient.module.css";
 
 import {
@@ -76,20 +78,7 @@ function OrderIngredient({ item, placeType }) {
 }
 
 OrderIngredient.propTypes = {
-  item: PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    proteins: PropTypes.number,
-    type: PropTypes.string,
-    __v: PropTypes.number,
-    _id: PropTypes.string,
-  }),
+  item: PropTypes.shape(shapeIngridientTypes).isRequired,
   placeType: PropTypes.string
 }
 
