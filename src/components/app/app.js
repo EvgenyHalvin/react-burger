@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import appStyles from "./app.module.css";
 
 import AppHeader from "../app-header/app-header";
@@ -7,10 +8,16 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
 
-import api from "../../utils/api";
+import { getItems } from "../../services/actions/actions";
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
+  const { ingredients, ingridientsFailed, ingridientsRequest } = useSelector(store => store.burger);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, []);
 
   // Отображение модальных окон
   const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
@@ -18,14 +25,6 @@ function App() {
 
   // Информация для модального окна
   const [modalInfo, setModalInfo] = useState({});
-
-  // Загрузка данных об ингредиентах с сервера
-  useEffect(() => {
-    api
-      .getIngredients()
-      .then((res) => setIngredients(res.data))
-      .catch((err) => console.log(err));
-  }, []);
 
   // Отрктыие модального окна с информацией об игриденте
   function openIngredientDetailsModal(ingreient) {
@@ -50,11 +49,13 @@ function App() {
     <div className={appStyles.app}>
       <AppHeader />
 
-      <Main
-        items={ingredients}
-        openIngridientsModal={openIngredientDetailsModal}
-        openOrderDetailsModal={openOrderDetailsModal}
-      />
+      {ingredients && (
+        <Main
+          items={ingredients}
+          openIngridientsModal={openIngredientDetailsModal}
+          openOrderDetailsModal={openOrderDetailsModal}
+        />
+      )}
 
       {isIngredientDetailsOpen && (
         <Modal

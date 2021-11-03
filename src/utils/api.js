@@ -4,7 +4,7 @@ class Api {
   }
 
   _checkResponse(res) {
-    if (res.ok) {
+    if (res && res.ok) {
       return res.json();
     }
     return Promise.reject(`Произошла ошибка: ${res.status}`);
