@@ -16,7 +16,7 @@ const burgerState = {
 };
 
 // Редьюсер всех манипуляций с бургером
-const burger = (state = burgerState, action) => {
+const burgerReducer = (state = burgerState, action) => {
   switch (action.type) {
     case GET_BURGER_ITEMS: {
       return {
@@ -46,5 +46,5 @@ const burger = (state = burgerState, action) => {
 
 // Корневой редьюсер
 export const rootReducer = combineReducers({
-  burger,
+  burger: burgerReducer,
 });
