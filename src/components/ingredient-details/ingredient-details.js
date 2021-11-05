@@ -1,48 +1,52 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { shapeIngridientTypes } from '../../utils/types';
 import ingredientsDetailsStyles from "./ingredient-details.module.css";
 
 import NutritionComponent from "../nutrition-component/nutrition-component";
 
-function IngredientDetails({ item }) {
+import { useSelector } from "react-redux";
+
+function IngredientDetails() {
+  const { currentIngridient } = useSelector((store) => store.ingredient);
+
   return (
     <div className={ingredientsDetailsStyles.details}>
       <div
-        style={{ backgroundImage: `url(${item.image_large})` }}
+        style={{ backgroundImage: `url(${currentIngridient.image_large})` }}
         className={ingredientsDetailsStyles.image}
       />
       <p
         className={`text text_type_main-medium ${ingredientsDetailsStyles.name}`}
       >
-        {item.name}
+        {currentIngridient.name}
       </p>
       <ul className={ingredientsDetailsStyles.nutritionValues}>
         <li className={ingredientsDetailsStyles.value}>
           <NutritionComponent
             unitName="Калории,ккал"
-            valueAmount={item.calories}
+            valueAmount={currentIngridient.calories}
           />
         </li>
         <li className={ingredientsDetailsStyles.value}>
-          <NutritionComponent unitName="Белки, г" valueAmount={item.proteins} />
+          <NutritionComponent
+            unitName="Белки, г"
+            valueAmount={currentIngridient.proteins}
+          />
         </li>
         <li className={ingredientsDetailsStyles.value}>
-          <NutritionComponent unitName="Жиры, г" valueAmount={item.fat} />
+          <NutritionComponent
+            unitName="Жиры, г"
+            valueAmount={currentIngridient.fat}
+          />
         </li>
         <li className={ingredientsDetailsStyles.value}>
           <NutritionComponent
             unitName="Углеводы, г"
-            valueAmount={item.carbohydrates}
+            valueAmount={currentIngridient.carbohydrates}
           />
         </li>
       </ul>
     </div>
   );
-}
-
-IngredientDetails.propTypes = {
-  item: PropTypes.shape(shapeIngridientTypes).isRequired
 }
 
 export default IngredientDetails;

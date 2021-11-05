@@ -1,13 +1,21 @@
 import React from "react";
 import infoStyles from "./info.module.css";
-import PropTypes from 'prop-types';
 
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function Info({ isOpen }) {
+import { useDispatch } from "react-redux";
+import { SET_ORDER } from "../../services/actions/actions";
+
+function Info() {
+  const dispatch = useDispatch();
+
+  const isOpen = () => {
+    dispatch({ type: SET_ORDER });
+  };
+
   return (
     <div className={infoStyles.info}>
       <p className={`text text_type_main-large ${infoStyles.pticeText}`}>610</p>
@@ -19,10 +27,6 @@ function Info({ isOpen }) {
       </Button>
     </div>
   );
-}
-
-Info.propTypes = {
-  isOpen: PropTypes.func.isRequired
 }
 
 export default Info;

@@ -3,19 +3,27 @@ import {
   GET_BURGER_ITEMS,
   GET_BURGER_ITEMS_FAILED,
   GET_BURGER_ITEMS_SUCCESS,
+  ADD_BURGER_ITEM_DATA,
+  DELETE_BURGER_ITEM_DATA,
+  SET_ORDER,
+  CLOSE_ORDER_MODAL,
 } from "../actions/actions";
 
 const burgerState = {
   ingredients: [],
-  constructorIngridients: [],
-  currentIngridient: {},
-  orderDetails: {},
-
   ingredientsFailed: false,
   ingredientsRequest: false,
+
+  constructorIngridients: [],
+
+  currentIngridient: {},
+  isIngredientDetailsOpen: false,
+
+  orderDetails: {},
+  isOrderDetailsOpen: false,
 };
 
-// Редьюсер всех манипуляций с бургером
+// Редьюсер загрузки данных об ингредиентах
 const burgerReducer = (state = burgerState, action) => {
   switch (action.type) {
     case GET_BURGER_ITEMS: {
@@ -44,7 +52,52 @@ const burgerReducer = (state = burgerState, action) => {
   }
 };
 
+// Редьюсер добавления данных об ингредиенте в попап
+const modalIngredientReducer = (state = burgerState, action) => {
+  switch (action.type) {
+    case ADD_BURGER_ITEM_DATA: {
+      return {
+        ...state,
+        currentIngridient: action.data,
+        isIngredientDetailsOpen: true,
+      };
+    }
+    case DELETE_BURGER_ITEM_DATA: {
+      return {
+        ...state,
+        currentIngridient: {},
+        isIngredientDetailsOpen: false,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+// Редьюсер добавления данных о заказе в попап
+const modalOrderReducer = (state = burgerState, action) => {
+  switch (action.type) {
+    case SET_ORDER: {
+      return {
+        ...state,
+        orderDetails: {},
+        isOrderDetailsOpen: true,
+      }
+    }
+    case CLOSE_ORDER_MODAL: {
+      return {
+        ...state,
+        isOrderDetailsOpen: false,
+      }
+    }
+    default:
+      return state;
+  }
+};
+
 // Корневой редьюсер
 export const rootReducer = combineReducers({
   burger: burgerReducer,
+  ingredient: modalIngredientReducer,
+  order: modalOrderReducer,
 });

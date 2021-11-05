@@ -5,7 +5,7 @@ import subIngredientsStyles from "./sub-ingredients.module.css";
 import Ingredient from "../ingredient/ingredient";
 
 // Рендер ингредиентов на страницу в соответствующий раздел
-function SubIngridients({ items, type, message, openIngridientsModal }) {
+function SubIngridients({ items, type, message }) {
   return (
     <>
       {items ? (
@@ -13,7 +13,6 @@ function SubIngridients({ items, type, message, openIngridientsModal }) {
           .filter((i) => i.type === type)
           .map((item) => (
             <Ingredient
-              openIngridientsModal={openIngridientsModal}
               item={item}
               key={item._id}
             />
@@ -33,7 +32,6 @@ SubIngridients.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   type: PropTypes.string.isRequired,
   message: PropTypes.string,
-  openIngridientsModal: PropTypes.func.isRequired,
 };
 
 export default SubIngridients;
