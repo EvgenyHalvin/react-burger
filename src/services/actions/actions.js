@@ -27,7 +27,7 @@ export function getItems() {
           data: res.data,
         });
       })
-      .catch((err) =>
+      .catch(() =>
         dispatch({
           type: GET_BURGER_ITEMS_FAILED,
         })

@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { scrollReducer } from "./scroll";
 import {
   GET_BURGER_ITEMS,
   GET_BURGER_ITEMS_FAILED,
@@ -82,13 +83,13 @@ const modalOrderReducer = (state = burgerState, action) => {
         ...state,
         orderDetails: {},
         isOrderDetailsOpen: true,
-      }
+      };
     }
     case CLOSE_ORDER_MODAL: {
       return {
         ...state,
         isOrderDetailsOpen: false,
-      }
+      };
     }
     default:
       return state;
@@ -100,4 +101,5 @@ export const rootReducer = combineReducers({
   burger: burgerReducer,
   ingredient: modalIngredientReducer,
   order: modalOrderReducer,
+  scroll: scrollReducer,
 });
