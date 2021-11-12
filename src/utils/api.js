@@ -1,6 +1,6 @@
 class Api {
-  constructor(){
-    this.baseUrl = 'https://norma.nomoreparties.space';
+  constructor() {
+    this.baseUrl = "https://norma.nomoreparties.space";
   }
 
   _checkResponse(res) {
@@ -15,7 +15,20 @@ class Api {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
+      },
+    }).then(this._checkResponse);
+  }
+
+  sendOrderData(items) {
+    return fetch(`${this.baseUrl}/api/orders`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingredients: items,
+      }),
     }).then(this._checkResponse);
   }
 }

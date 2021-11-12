@@ -6,6 +6,8 @@ import { CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-co
 import { useDispatch, useSelector } from "react-redux";
 import { SET_ORDER } from "../../services/actions/actions";
 
+import { setOrder } from "../../services/actions/actions";
+
 function Info() {
   const [orderPrice, setOrderPrice] = useState(0);
 
@@ -14,6 +16,7 @@ function Info() {
   const { orderItems } = useSelector((store) => store.burger);
 
   const isOpen = () => {
+    dispatch(setOrder(orderItems.map((item) => item._id)));
     dispatch({ type: SET_ORDER });
   };
 

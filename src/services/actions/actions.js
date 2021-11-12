@@ -39,3 +39,17 @@ export function getItems() {
       );
   };
 }
+
+export function setOrder(data) {
+  return function (dispatch) {
+    api
+      .sendOrderData(data)
+      .then((res) => {
+        dispatch({
+          type: SET_ORDER,
+          data: res,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+}

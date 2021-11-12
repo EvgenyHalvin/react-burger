@@ -181,7 +181,7 @@ const modalOrderReducer = (state = burgerState, action) => {
     case SET_ORDER: {
       return {
         ...state,
-        orderDetails: {},
+        orderDetails: action.data,
         isOrderDetailsOpen: true,
       };
     }
