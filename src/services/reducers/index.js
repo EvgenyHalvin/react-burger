@@ -39,7 +39,7 @@ const burgerReducer = (state = burgerState, action) => {
     case GET_BURGER_ITEMS_SUCCESS: {
       return {
         ...state,
-        ingredients: action.data,
+        ingredients: action.data.map((item) => ({ ...item, amount: 0 })),
         ingredientsRequest: false,
       };
     }
@@ -53,6 +53,16 @@ const burgerReducer = (state = burgerState, action) => {
     case ADD_ORDER_ITEM: {
       return {
         ...state,
+
+        // Увеличиваем счетчик после добавления ингредиента в список заказа
+        ingredient: [
+          ...state.ingredients,
+          state.ingredients
+            .filter((item) => item._id === action.itemId)
+            .map((item) => ({ ...item, amount: item.amount++ })),
+        ],
+
+        // Устанавливаем уникальный ключ для ингредиента в списке заказа
         constructorIngridients: [
           ...state.constructorIngridients,
           state.ingredients
@@ -64,7 +74,17 @@ const burgerReducer = (state = burgerState, action) => {
     case DELETE_ORDER_ITEM: {
       return {
         ...state,
+
+        // Убираем ингредиент из списка заказа
         constructorIngridients: [...state.constructorIngridients.filter((item) => item.listKey !== action.listKey)],
+
+        // Уменьшаем счетчик после удаления ингредиента из списка заказа
+        ingredient: [
+          ...state.ingredients,
+          state.ingredients
+            .filter((item) => item._id === action.itemId)
+            .map((item) => ({ ...item, amount: item.amount-- })),
+        ],
       };
     }
     default:

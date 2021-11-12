@@ -11,11 +11,12 @@ import { CurrencyIcon, LockIcon, DeleteIcon, DragIcon } from "@ya.praktikum/reac
 
 function OrderIngredient({ item, placeType }) {
   const dispatch = useDispatch();
-
+  
   const onDelete = () => {
     dispatch({
       type: DELETE_ORDER_ITEM,
       listKey: item.listKey,
+      itemId: item._id,
     });
   };
 

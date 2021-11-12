@@ -9,7 +9,7 @@ import { ADD_BURGER_ITEM_DATA } from "../../services/actions/actions";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function Ingredient({ item }) {
   const { _id } = item;
@@ -17,7 +17,7 @@ function Ingredient({ item }) {
 
   const [, dragRef] = useDrag({
     type: "ingredient",
-    item: {_id}
+    item: { _id },
   });
 
   const openModal = () => {
@@ -26,7 +26,7 @@ function Ingredient({ item }) {
 
   return (
     <div ref={dragRef} className={ingredientStyles.ingredient} onClick={openModal}>
-      {/* <Counter count={1} size="small" /> */}
+      {item.amount > 0 && <Counter count={item.amount} size="small" />}
       <div className={ingredientStyles.image} style={{ backgroundImage: `url(${item.image})` }} />
       <div className={ingredientStyles.priceBlock}>
         <p className={`text text_type_main-small ${ingredientStyles.price}`}>{item.price}</p>
