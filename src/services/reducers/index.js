@@ -8,6 +8,8 @@ import {
   DELETE_BURGER_ITEM_DATA,
   SET_ORDER,
   CLOSE_ORDER_MODAL,
+  ADD_ORDER_ITEM,
+  DELETE_ORDER_ITEM,
 } from "../actions/actions";
 
 const burgerState = {
@@ -24,7 +26,7 @@ const burgerState = {
   isOrderDetailsOpen: false,
 };
 
-// Редьюсер загрузки данных об ингредиентах
+// Редьюсер загрузки данных об ингредиентах + манипуляции с ингредиентами
 const burgerReducer = (state = burgerState, action) => {
   switch (action.type) {
     case GET_BURGER_ITEMS: {
@@ -46,6 +48,23 @@ const burgerReducer = (state = burgerState, action) => {
         ...state,
         ingredientsFailed: true,
         ingredientsRequest: false,
+      };
+    }
+    case ADD_ORDER_ITEM: {
+      return {
+        ...state,
+        constructorIngridients: [
+          ...state.constructorIngridients,
+          state.ingredients
+            .filter((item) => item._id === action.itemId)
+            .map((item) => ({ ...item, listKey: action.listKey }))[0],
+        ],
+      };
+    }
+    case DELETE_ORDER_ITEM: {
+      return {
+        ...state,
+        constructorIngridients: [...state.constructorIngridients.filter((item) => item.listKey !== action.listKey)],
       };
     }
     default:

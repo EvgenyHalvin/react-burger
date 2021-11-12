@@ -13,6 +13,10 @@ export const DELETE_BURGER_ITEM_DATA = "DELETE_BURGER_ITEM_DATA";
 export const SET_ORDER = "SET_ORDER";
 export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
 
+// Для DND и манипуляций с заказом
+export const ADD_ORDER_ITEM = "ADD_ORDER_ITEM";
+export const DELETE_ORDER_ITEM = "DELETE_ORDER_ITEM";
+
 export function getItems() {
   return function (dispatch) {
     dispatch({
@@ -33,4 +37,10 @@ export function getItems() {
         })
       );
   };
+}
+
+export function regenId() {
+  return function(dispatch) {
+    
+  }
 }

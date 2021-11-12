@@ -33,8 +33,6 @@ function BurgerIngredients() {
       )}
       <OrderList
         placeType="middle"
-        items={ingredients}
-        exception={firstAndLastItem}
       />
       {firstAndLastItem && (
         <OrderIngredient item={firstAndLastItem} placeType="last" />

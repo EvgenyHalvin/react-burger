@@ -1,23 +1,38 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import orderListStyles from "./order-list.module.css";
+
+import { v4 as uuidv4 } from "uuid";
+
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_ORDER_ITEM } from "../../services/actions/actions";
+
+import { useDrop } from "react-dnd";
 
 import OrderIngredient from "../order-ingredient/order-ingredient";
 
-function OrderList({ items, exception }) {
+function OrderList() {
+  const dispatch = useDispatch();
+  const { constructorIngridients } = useSelector((store) => store.burger);
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(itemId) {
+      dispatch({
+        type: ADD_ORDER_ITEM,
+        itemId: itemId._id,
+        listKey: uuidv4(),
+      });
+    },
+  });
+
   return (
-    <div className={orderListStyles.orderList}>
-      {items && exception && items
-        .filter((i) => i.name !== exception.name)
-        .map((item) => (
-          <OrderIngredient key={item._id} item={item} />
-        ))}
+    <div ref={dropTarget} className={orderListStyles.orderList}>
+      {constructorIngridients &&
+        constructorIngridients
+          .filter((i) => i.type !== "bun")
+          .map((item) => <OrderIngredient key={item.listKey} item={item} />)}
     </div>
   );
-}
-
-OrderList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default OrderList;

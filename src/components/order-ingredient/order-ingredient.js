@@ -1,17 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { shapeIngridientTypes } from '../../utils/types';
+import { shapeIngridientTypes } from "../../utils/types";
 
 import orderIngredientStyles from "./order-ingredient.module.css";
 
-import {
-  CurrencyIcon,
-  LockIcon,
-  DeleteIcon,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import { DELETE_ORDER_ITEM } from "../../services/actions/actions";
+
+import { CurrencyIcon, LockIcon, DeleteIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function OrderIngredient({ item, placeType }) {
+  const dispatch = useDispatch();
+
+  const onDelete = () => {
+    dispatch({
+      type: DELETE_ORDER_ITEM,
+      listKey: item.listKey,
+    });
+  };
+
   return (
     <div
       className={orderIngredientStyles.component}
@@ -19,26 +26,16 @@ function OrderIngredient({ item, placeType }) {
         marginBottom: `${placeType === "last" && "0"}`,
       }}
     >
-      {placeType !== "first" && placeType !== "last" && (
-        <DragIcon type="primary" />
-      )}
+      {placeType !== "first" && placeType !== "last" && <DragIcon type="primary" />}
       <div
         className={orderIngredientStyles.listItem}
         style={{
           borderRadius: `${
-            placeType === "first"
-              ? "88px 88px 40px 40px"
-              : placeType === "last"
-              ? "40px 40px 88px 88px"
-              : "40px"
+            placeType === "first" ? "88px 88px 40px 40px" : placeType === "last" ? "40px 40px 88px 88px" : "40px"
           }`,
           marginTop: `${placeType === "last" && "16px"}`,
-          marginRight: `${
-            (placeType === "first" || placeType === "last") && "8px"
-          }`,
-          marginLeft: `${
-            (placeType === "first" || placeType === "last") && "auto"
-          }`,
+          marginRight: `${(placeType === "first" || placeType === "last") && "8px"}`,
+          marginLeft: `${(placeType === "first" || placeType === "last") && "auto"}`,
         }}
       >
         <div
@@ -48,29 +45,21 @@ function OrderIngredient({ item, placeType }) {
             transform: `${placeType === "last" && "rotate(180deg)"}`,
           }}
         />
-        <p
-          className={`text text_type_main-default ${orderIngredientStyles.name}`}
-        >
+        <p className={`text text_type_main-default ${orderIngredientStyles.name}`}>
           {item.name}
           <br />
-          {placeType === "first"
-            ? "(верх)"
-            : placeType === "last"
-            ? "(низ)"
-            : ""}
+          {placeType === "first" ? "(верх)" : placeType === "last" ? "(низ)" : ""}
         </p>
         <div className={orderIngredientStyles.priceBlock}>
-          <p
-            className={`text text_type_main-small ${orderIngredientStyles.price}`}
-          >
-            {item.price}
-          </p>
+          <p className={`text text_type_main-small ${orderIngredientStyles.price}`}>{item.price}</p>
           <CurrencyIcon type="primary" />
         </div>
         {placeType === "first" || placeType === "last" ? (
           <LockIcon type="secondary" />
         ) : (
-          <DeleteIcon type="primary" />
+          <span className={orderIngredientStyles.pointer}>
+            <DeleteIcon type="primary" onClick={onDelete} />
+          </span>
         )}
       </div>
     </div>
@@ -79,7 +68,7 @@ function OrderIngredient({ item, placeType }) {
 
 OrderIngredient.propTypes = {
   item: PropTypes.shape(shapeIngridientTypes).isRequired,
-  placeType: PropTypes.string
-}
+  placeType: PropTypes.string,
+};
 
 export default OrderIngredient;
