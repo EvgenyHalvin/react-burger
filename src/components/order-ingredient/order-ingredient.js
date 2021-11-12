@@ -11,7 +11,7 @@ import { CurrencyIcon, LockIcon, DeleteIcon, DragIcon } from "@ya.praktikum/reac
 
 function OrderIngredient({ item, placeType }) {
   const dispatch = useDispatch();
-  
+
   const onDelete = () => {
     dispatch({
       type: DELETE_ORDER_ITEM,
@@ -47,7 +47,7 @@ function OrderIngredient({ item, placeType }) {
           }}
         />
         <p className={`text text_type_main-default ${orderIngredientStyles.name}`}>
-          {item.name}
+          <span className={orderIngredientStyles.dots}>{item.name}</span>
           <br />
           {placeType === "first" ? "(верх)" : placeType === "last" ? "(низ)" : ""}
         </p>

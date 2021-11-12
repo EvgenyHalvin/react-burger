@@ -123,6 +123,7 @@ const burgerReducer = (state = burgerState, action) => {
                   amount: item.amount--,
                 };
               }
+              return item;
             }),
         ],
       };
