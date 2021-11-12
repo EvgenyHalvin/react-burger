@@ -10,6 +10,7 @@ import {
   CLOSE_ORDER_MODAL,
   ADD_ORDER_ITEM,
   DELETE_ORDER_ITEM,
+  REPLACE_ORDER_BUN,
 } from "../actions/actions";
 
 const burgerState = {
@@ -17,6 +18,7 @@ const burgerState = {
   ingredientsFailed: false,
   ingredientsRequest: false,
 
+  currentBun: {},
   constructorIngridients: [],
 
   currentIngridient: {},
@@ -39,7 +41,18 @@ const burgerReducer = (state = burgerState, action) => {
     case GET_BURGER_ITEMS_SUCCESS: {
       return {
         ...state,
-        ingredients: action.data.map((item) => ({ ...item, amount: 0 })),
+        ingredients: [
+          ...action.data.map((item) => {
+            if (item.name === "Краторная булка N-200i") {
+              return {
+                ...item,
+                amount: 1,
+              };
+            }
+            return { ...item, amount: 0 };
+          }),
+        ],
+        currentBun: action.data.find((item) => item.name === "Краторная булка N-200i"),
         ingredientsRequest: false,
       };
     }
@@ -55,14 +68,14 @@ const burgerReducer = (state = burgerState, action) => {
         ...state,
 
         // Увеличиваем счетчик после добавления ингредиента в список заказа
-        ingredient: [
+        ingredients: [
           ...state.ingredients,
           state.ingredients
             .filter((item) => item._id === action.itemId)
             .map((item) => ({ ...item, amount: item.amount++ })),
         ],
 
-        // Устанавливаем уникальный ключ для ингредиента в списке заказа
+        // Добавляем ингредиент и устанавливаем ему уникальный ключ
         constructorIngridients: [
           ...state.constructorIngridients,
           state.ingredients
@@ -79,11 +92,38 @@ const burgerReducer = (state = burgerState, action) => {
         constructorIngridients: [...state.constructorIngridients.filter((item) => item.listKey !== action.listKey)],
 
         // Уменьшаем счетчик после удаления ингредиента из списка заказа
-        ingredient: [
+        ingredients: [
           ...state.ingredients,
           state.ingredients
             .filter((item) => item._id === action.itemId)
             .map((item) => ({ ...item, amount: item.amount-- })),
+        ],
+      };
+    }
+    case REPLACE_ORDER_BUN: {
+      return {
+        //Замена на выбранную булку
+        ...state,
+        currentBun: state.ingredients.find((item) => item._id === action.itemId),
+
+        // Увеличение счетчика выбранной булки
+        ingredients: [
+          ...state.ingredients,
+          state.ingredients
+            .filter((item) => item.type === "bun")
+            .map((item) => {
+              if (item._id === action.itemId && item.amount === 0) {
+                return {
+                  ...item,
+                  amount: item.amount++,
+                };
+              } else if (item.amount === 1) {
+                return {
+                  ...item,
+                  amount: item.amount--,
+                };
+              }
+            }),
         ],
       };
     }

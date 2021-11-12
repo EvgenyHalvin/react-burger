@@ -16,10 +16,11 @@ function OrderList() {
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemId) {
-      dispatch({
+    drop(item) {
+      item.itemType !== "bun" && dispatch({
         type: ADD_ORDER_ITEM,
-        itemId: itemId._id,
+        itemId: item.itemId,
+        itemType: item.itemType,
         listKey: uuidv4(),
       });
     },

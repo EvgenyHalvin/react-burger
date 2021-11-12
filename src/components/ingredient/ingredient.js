@@ -9,15 +9,15 @@ import { ADD_BURGER_ITEM_DATA } from "../../services/actions/actions";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Ingredient({ item }) {
-  const { _id } = item;
+  const { _id: itemId, type: itemType } = item;
   const dispatch = useDispatch();
 
   const [, dragRef] = useDrag({
     type: "ingredient",
-    item: { _id },
+    item: { itemId, itemType },
   });
 
   const openModal = () => {

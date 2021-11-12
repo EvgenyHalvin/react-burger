@@ -68,7 +68,7 @@ function OrderIngredient({ item, placeType }) {
 }
 
 OrderIngredient.propTypes = {
-  item: PropTypes.shape(shapeIngridientTypes).isRequired,
+  item: PropTypes.shape(shapeIngridientTypes),
   placeType: PropTypes.string,
 };
 

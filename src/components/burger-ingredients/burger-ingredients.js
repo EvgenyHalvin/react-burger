@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import burgerIngredientsStyles from "./burger-ingredients.module.css";
 
 import OrderIngredient from "../order-ingredient/order-ingredient";
@@ -6,37 +6,31 @@ import OrderList from "../order-list/order-list";
 import Info from "../info/info";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getItems } from "../../services/actions/actions";
+import { REPLACE_ORDER_BUN } from "../../services/actions/actions";
+
+import { useDrop } from "react-dnd";
 
 function BurgerIngredients() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getItems());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { currentBun } = useSelector((store) => store.burger);
 
-  const { ingredients } = useSelector((store) => store.burger);
-
-  const [firstAndLastItem, setFirstAndLastItems] = useState(false);
-
-  useEffect(() => {
-    setFirstAndLastItems(() => {
-      return ingredients.find((item) => item.name === "Краторная булка N-200i");
-    });
-  }, [ingredients]);
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      item.itemType === "bun" &&
+        dispatch({
+          type: REPLACE_ORDER_BUN,
+          itemId: item.itemId,
+        });
+    },
+  });
 
   return (
-    <section className={burgerIngredientsStyles.burgerIngredients}>
-      {firstAndLastItem && (
-        <OrderIngredient item={firstAndLastItem} placeType="first" />
-      )}
-      <OrderList
-        placeType="middle"
-      />
-      {firstAndLastItem && (
-        <OrderIngredient item={firstAndLastItem} placeType="last" />
-      )}
+    <section ref={dropTarget} className={burgerIngredientsStyles.burgerIngredients}>
+      {currentBun && <OrderIngredient item={currentBun} placeType="first" />}
+      <OrderList />
+      {currentBun && <OrderIngredient item={currentBun} placeType="last" />}
       <Info />
     </section>
   );

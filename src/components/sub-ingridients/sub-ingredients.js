@@ -29,7 +29,7 @@ function SubIngridients({ items, type, message }) {
 }
 
 SubIngridients.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  items: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
   message: PropTypes.string,
 };
