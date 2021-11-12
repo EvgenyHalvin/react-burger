@@ -61,11 +61,3 @@
 .pointer:hover {
   opacity: .5;
 }
-
-.dots {
-  max-width: 254px;
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}

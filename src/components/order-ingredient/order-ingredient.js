@@ -47,7 +47,7 @@ function OrderIngredient({ item, placeType }) {
           }}
         />
         <p className={`text text_type_main-default ${orderIngredientStyles.name}`}>
-          <span className={orderIngredientStyles.dots}>{item.name}</span>
+          <span>{item.name}</span>
           <br />
           {placeType === "first" ? "(верх)" : placeType === "last" ? "(низ)" : ""}
         </p>

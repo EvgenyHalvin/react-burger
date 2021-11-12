@@ -24,6 +24,7 @@ const burgerState = {
   currentIngridient: {},
   isIngredientDetailsOpen: false,
 
+  orderItems: [],
   orderDetails: {},
   isOrderDetailsOpen: false,
 };
@@ -41,6 +42,8 @@ const burgerReducer = (state = burgerState, action) => {
     case GET_BURGER_ITEMS_SUCCESS: {
       return {
         ...state,
+
+        // По умолчанию добавляем счетчик краторной булке
         ingredients: [
           ...action.data.map((item) => {
             if (item.name === "Краторная булка N-200i") {
@@ -52,6 +55,14 @@ const burgerReducer = (state = burgerState, action) => {
             return { ...item, amount: 0 };
           }),
         ],
+
+        // Добавляем краторную булку в заказ после рендера ингредиентов
+        orderItems: [
+          ...state.orderItems,
+          action.data.find((item) => item.name === "Краторная булка N-200i"),
+          action.data.find((item) => item.name === "Краторная булка N-200i"),
+        ],
+
         currentBun: action.data.find((item) => item.name === "Краторная булка N-200i"),
         ingredientsRequest: false,
       };
@@ -75,6 +86,8 @@ const burgerReducer = (state = burgerState, action) => {
             .map((item) => ({ ...item, amount: item.amount++ })),
         ],
 
+        orderItems: [...state.orderItems, state.ingredients.find((item) => item._id === action.itemId)],
+
         // Добавляем ингредиент и устанавливаем ему уникальный ключ
         constructorIngridients: [
           ...state.constructorIngridients,
@@ -91,6 +104,8 @@ const burgerReducer = (state = burgerState, action) => {
         // Убираем ингредиент из списка заказа
         constructorIngridients: [...state.constructorIngridients.filter((item) => item.listKey !== action.listKey)],
 
+        orderItems: [...state.orderItems.filter((item) => item._id !== action.itemId)],
+
         // Уменьшаем счетчик после удаления ингредиента из списка заказа
         ingredients: [
           ...state.ingredients,
@@ -105,6 +120,11 @@ const burgerReducer = (state = burgerState, action) => {
         //Замена на выбранную булку
         ...state,
         currentBun: state.ingredients.find((item) => item._id === action.itemId),
+        orderItems: [
+          ...state.orderItems.filter((item) => item.type !== "bun"),
+          state.ingredients.find((item) => item._id === action.itemId),
+          state.ingredients.find((item) => item._id === action.itemId),
+        ],
 
         // Увеличение счетчика выбранной булки
         ingredients: [

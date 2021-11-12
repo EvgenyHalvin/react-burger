@@ -39,7 +39,3 @@ export function getItems() {
       );
   };
 }
-
-export function regenId() {
-  return function (dispatch) {};
-}
