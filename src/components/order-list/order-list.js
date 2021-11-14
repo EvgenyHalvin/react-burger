@@ -1,7 +1,7 @@
 import React from "react";
 import orderListStyles from "./order-list.module.css";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 import OrderIngredient from "../order-ingredient/order-ingredient";
 

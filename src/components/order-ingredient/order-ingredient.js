@@ -12,7 +12,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { CurrencyIcon, LockIcon, DeleteIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function OrderIngredient({ item, index, placeType }) {
-  const ref = useRef();
+  const ref = useRef(null);
   const dispatch = useDispatch();
   const { _id: itemId, type: itemType } = item;
 
@@ -44,10 +44,12 @@ function OrderIngredient({ item, index, placeType }) {
       // Перемещение только тогда, когда мышь пересекла половину высоты элемента
       // При перетаскивание вниз только тогда, когда курсор находится ниже 50% элемента
       // При перетаскивание вверх только тогда, когда курсор находится выше 50% элемента
+
+      // Тянем вверх
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
-      // Dragging upwards
+      // Тянем вниз
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
