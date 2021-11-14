@@ -17,6 +17,7 @@ export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
 export const ADD_ORDER_ITEM = "ADD_ORDER_ITEM";
 export const DELETE_ORDER_ITEM = "DELETE_ORDER_ITEM";
 export const REPLACE_ORDER_BUN = "REPLACE_ORDER_BUN";
+export const MOVE_ITEM = "MOVE_ITEM";
 
 export function getItems() {
   return function (dispatch) {

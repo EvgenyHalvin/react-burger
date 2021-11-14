@@ -9,7 +9,9 @@ function OrderDetails() {
 
   return (
     <div className={orderStyles.order}>
-      <h1 className={`${orderStyles.title} text text_type_digits-large`}>{orderDetails && orderDetails.order.number}</h1>
+      <h1 className={`${orderStyles.title} text text_type_digits-large`}>
+        {orderDetails && orderDetails.order.number}
+      </h1>
       <p className={`${orderStyles.orderText} text text_type_main-medium`}>{orderDetails && orderDetails.name}</p>
       <img className={orderStyles.image} src={done} alt="Заказано!" />
       <p className={`${orderStyles.orderText} ${orderStyles.text_wait} text text_type_main-default`}>

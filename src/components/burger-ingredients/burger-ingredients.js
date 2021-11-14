@@ -6,7 +6,9 @@ import OrderList from "../order-list/order-list";
 import Info from "../info/info";
 
 import { useSelector, useDispatch } from "react-redux";
-import { REPLACE_ORDER_BUN } from "../../services/actions/actions";
+import { REPLACE_ORDER_BUN, ADD_ORDER_ITEM } from "../../services/actions/actions";
+
+import { v4 as uuidv4 } from "uuid";
 
 import { useDrop } from "react-dnd";
 
@@ -22,6 +24,13 @@ function BurgerIngredients() {
         dispatch({
           type: REPLACE_ORDER_BUN,
           itemId: item.itemId,
+        });
+      item.itemType !== "bun" &&
+        dispatch({
+          type: ADD_ORDER_ITEM,
+          itemId: item.itemId,
+          itemType: item.itemType,
+          listKey: uuidv4(),
         });
     },
   });

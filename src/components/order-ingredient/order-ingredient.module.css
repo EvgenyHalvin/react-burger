@@ -7,6 +7,18 @@
   margin-right: 8px;
 }
 
+.draggableComponent {
+  cursor: pointer;
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+.place {
+  white-space: nowrap;
+}
+
 .component:last-of-type {
   margin-bottom: 0;
 }

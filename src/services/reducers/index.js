@@ -11,6 +11,7 @@ import {
   ADD_ORDER_ITEM,
   DELETE_ORDER_ITEM,
   REPLACE_ORDER_BUN,
+  MOVE_ITEM,
 } from "../actions/actions";
 
 const burgerState = {
@@ -86,11 +87,16 @@ const burgerReducer = (state = burgerState, action) => {
             .map((item) => ({ ...item, amount: item.amount++ })),
         ],
 
-        orderItems: [...state.orderItems, state.ingredients.find((item) => item._id === action.itemId)],
-
         // Добавляем ингредиент и устанавливаем ему уникальный ключ
         constructorIngridients: [
           ...state.constructorIngridients,
+          state.ingredients
+            .filter((item) => item._id === action.itemId)
+            .map((item) => ({ ...item, listKey: action.listKey }))[0],
+        ],
+
+        orderItems: [
+          ...state.orderItems,
           state.ingredients
             .filter((item) => item._id === action.itemId)
             .map((item) => ({ ...item, listKey: action.listKey }))[0],
@@ -104,7 +110,7 @@ const burgerReducer = (state = burgerState, action) => {
         // Убираем ингредиент из списка заказа
         constructorIngridients: [...state.constructorIngridients.filter((item) => item.listKey !== action.listKey)],
 
-        orderItems: [...state.orderItems.filter((item) => item._id !== action.itemId)],
+        orderItems: [...state.orderItems.filter((item) => item.listKey !== action.listKey)],
 
         // Уменьшаем счетчик после удаления ингредиента из списка заказа
         ingredients: [
@@ -116,37 +122,60 @@ const burgerReducer = (state = burgerState, action) => {
       };
     }
     case REPLACE_ORDER_BUN: {
-      return {
-        //Замена на выбранную булку
-        ...state,
-        currentBun: state.ingredients.find((item) => item._id === action.itemId),
-        orderItems: [
-          ...state.orderItems.filter((item) => item.type !== "bun"),
-          state.ingredients.find((item) => item._id === action.itemId),
-          state.ingredients.find((item) => item._id === action.itemId),
-        ],
+      if (state.currentBun._id !== action.itemId) {
+        return {
+          //Замена на выбранную булку
+          ...state,
+          currentBun: state.ingredients.find((item) => item._id === action.itemId),
+          orderItems: [
+            ...state.orderItems.filter((item) => item.type !== "bun"),
+            state.ingredients.find((item) => item._id === action.itemId),
+            state.ingredients.find((item) => item._id === action.itemId),
+          ],
 
-        // Увеличение счетчика выбранной булки
-        ingredients: [
-          ...state.ingredients,
-          state.ingredients
-            .filter((item) => item.type === "bun")
-            .map((item) => {
-              if (item._id === action.itemId && item.amount === 0) {
-                return {
-                  ...item,
-                  amount: item.amount++,
-                };
-              } else if (item.amount === 1) {
-                return {
-                  ...item,
-                  amount: item.amount--,
-                };
-              }
-              return item;
-            }),
-        ],
-      };
+          // Увеличение счетчика выбранной булки
+          ingredients: [
+            ...state.ingredients,
+            state.ingredients
+              .filter((item) => item.type === "bun")
+              .map((item) => {
+                if (item._id === action.itemId && item.amount === 0) {
+                  return {
+                    ...item,
+                    amount: item.amount++,
+                  };
+                } else if (item.amount === 1) {
+                  return {
+                    ...item,
+                    amount: item.amount--,
+                  };
+                }
+                return item;
+              }),
+          ],
+        };
+      }
+      return state;
+    }
+    case MOVE_ITEM: {
+      // Индексы ингредиентов
+      const dragIndex = action.dragIndex; // индекс ингредиента, который перетаскиваем
+      const hoverIndex = action.hoverIndex; // индекс ингредиента, на место которого перетаскиваем
+
+      // Копия массива ингредеинтов в списке заказов(без булок)
+      const newOrderItems = state.constructorIngridients;
+
+      // Перетаскиваемый игредиент
+      const dragItem = state.constructorIngridients[dragIndex];
+    
+      // Изменение порядка в массиве
+      newOrderItems.splice(dragIndex, 1);
+      newOrderItems.splice(hoverIndex, 0, dragItem);
+
+      return {
+        ...state,
+        constructorIngridients: newOrderItems,
+      }
     }
     default:
       return state;
