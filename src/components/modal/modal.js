@@ -6,42 +6,21 @@ import modalStyles from "./modal.module.css";
 import ModalOverlay from "./modal-overlay";
 import ModalHeader from "./modal-header";
 
-import { useDispatch } from "react-redux";
-import {
-  DELETE_BURGER_ITEM_DATA,
-  CLOSE_ORDER_MODAL,
-} from "../../services/actions/actions";
-
-function Modal({ children, headerTitle, type }) {
+function Modal({ children, headerTitle, type, onClose }) {
   const modalRoot = document.getElementById("react-modals");
-
-  const dispatch = useDispatch();
-
-  const onClose = () => {
-    switch (type) {
-      case "ingredient": {
-        return dispatch({ type: DELETE_BURGER_ITEM_DATA });
-      }
-      case "order": {
-        return dispatch({ type: CLOSE_ORDER_MODAL });
-      }
-      default:
-        return;
-    }
-  };
 
   // Установка слушателя для Escape
   useEffect(() => {
     const close = (e) => {
       if (e.key === "Escape") {
-        onClose();
+        onClose(type);
       }
     };
 
     window.addEventListener("keydown", close);
 
     return () => window.removeEventListener("keydown", close);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return ReactDOM.createPortal(
@@ -49,10 +28,10 @@ function Modal({ children, headerTitle, type }) {
       className={`${modalStyles.modalContainer} ${modalStyles.modalContainer_opened}`}
     >
       <div className={modalStyles.modal}>
-        <ModalHeader onClose={onClose}>{headerTitle}</ModalHeader>
+        <ModalHeader onClose={() => onClose(type)}>{headerTitle}</ModalHeader>
         {children}
       </div>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={() => onClose(type)} />
     </div>,
     modalRoot
   );
@@ -61,6 +40,8 @@ function Modal({ children, headerTitle, type }) {
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   headerTitle: PropTypes.string,
+  type: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 export default Modal;

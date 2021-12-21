@@ -44,27 +44,12 @@ const burgerReducer = (state = burgerState, action) => {
       return {
         ...state,
 
-        // По умолчанию добавляем счетчик краторной булке
         ingredients: [
           ...action.data.map((item) => {
-            if (item.name === "Краторная булка N-200i") {
-              return {
-                ...item,
-                amount: 1,
-              };
-            }
             return { ...item, amount: 0 };
           }),
         ],
 
-        // Добавляем краторную булку в заказ после рендера ингредиентов
-        orderItems: [
-          ...state.orderItems,
-          action.data.find((item) => item.name === "Краторная булка N-200i"),
-          action.data.find((item) => item.name === "Краторная булка N-200i"),
-        ],
-
-        currentBun: action.data.find((item) => item.name === "Краторная булка N-200i"),
         ingredientsRequest: false,
       };
     }
@@ -142,12 +127,12 @@ const burgerReducer = (state = burgerState, action) => {
                 if (item._id === action.itemId && item.amount === 0) {
                   return {
                     ...item,
-                    amount: item.amount++,
+                    amount: item.amount = 2,
                   };
-                } else if (item.amount === 1) {
+                } else if (item.amount === 2) {
                   return {
                     ...item,
-                    amount: item.amount--,
+                    amount: item.amount = 0,
                   };
                 }
                 return item;
@@ -167,7 +152,7 @@ const burgerReducer = (state = burgerState, action) => {
 
       // Перетаскиваемый игредиент
       const dragItem = state.constructorIngridients[dragIndex];
-    
+
       // Изменение порядка в массиве
       newOrderItems.splice(dragIndex, 1);
       newOrderItems.splice(hoverIndex, 0, dragItem);
@@ -175,7 +160,7 @@ const burgerReducer = (state = burgerState, action) => {
       return {
         ...state,
         constructorIngridients: newOrderItems,
-      }
+      };
     }
     default:
       return state;

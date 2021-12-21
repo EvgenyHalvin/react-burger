@@ -9,7 +9,12 @@ import { DELETE_ORDER_ITEM, MOVE_ITEM } from "../../services/actions/actions";
 
 import { useDrag, useDrop } from "react-dnd";
 
-import { CurrencyIcon, LockIcon, DeleteIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  LockIcon,
+  DeleteIcon,
+  DragIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 
 function OrderIngredient({ item, index, placeType }) {
   const ref = useRef(null);
@@ -34,7 +39,8 @@ function OrderIngredient({ item, index, placeType }) {
       // Снимаем мерки с контейнера ингредиента
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       // Ищем центр конйтенера ингредиента
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       // Позиция указателя мыши
       const clientOffset = monitor.getClientOffset();
@@ -60,6 +66,8 @@ function OrderIngredient({ item, index, placeType }) {
         dragIndex: dragIndex,
         hoverIndex: hoverIndex,
       });
+
+      item.index = hoverIndex;
     },
   });
 
@@ -82,7 +90,7 @@ function OrderIngredient({ item, index, placeType }) {
       itemId: item._id,
     });
   };
-
+  // FIXME fix this
   return (
     <div
       ref={ref}
@@ -94,16 +102,26 @@ function OrderIngredient({ item, index, placeType }) {
         opacity,
       }}
     >
-      {placeType !== "first" && placeType !== "last" && <DragIcon type="primary" />}
+      {placeType !== "first" && placeType !== "last" && (
+        <DragIcon type="primary" />
+      )}
       <div
         className={orderIngredientStyles.listItem}
         style={{
           borderRadius: `${
-            placeType === "first" ? "88px 88px 40px 40px" : placeType === "last" ? "40px 40px 88px 88px" : "40px"
+            placeType === "first"
+              ? "88px 88px 40px 40px"
+              : placeType === "last"
+              ? "40px 40px 88px 88px"
+              : "40px"
           }`,
           marginTop: `${placeType === "last" && "16px"}`,
-          marginRight: `${(placeType === "first" || placeType === "last") && "8px"}`,
-          marginLeft: `${(placeType === "first" || placeType === "last") && "auto"}`,
+          marginRight: `${
+            (placeType === "first" || placeType === "last") && "8px"
+          }`,
+          marginLeft: `${
+            (placeType === "first" || placeType === "last") && "auto"
+          }`,
         }}
       >
         <div
@@ -113,18 +131,25 @@ function OrderIngredient({ item, index, placeType }) {
             transform: `${placeType === "last" && "rotate(180deg)"}`,
           }}
         />
-        <p className={`text text_type_main-default ${orderIngredientStyles.name}`}>
-          <span>{item.name}</span>
-          {placeType === "first" ? (
+        <p
+          className={`text text_type_main-default ${orderIngredientStyles.name}`}
+        >
+          <span>
+            {item.name ?? "Выберите любую булку и перетащите ее сюда"}
+          </span>
+          {placeType === "first" && (
             <span className={orderIngredientStyles.place}> (верх)</span>
-          ) : placeType === "last" ? (
+          )}
+          {placeType === "last" && (
             <span className={orderIngredientStyles.place}> (низ)</span>
-          ) : (
-            ""
           )}
         </p>
         <div className={orderIngredientStyles.priceBlock}>
-          <p className={`text text_type_main-small ${orderIngredientStyles.price}`}>{item.price}</p>
+          <p
+            className={`text text_type_main-small ${orderIngredientStyles.price}`}
+          >
+            {item.price}
+          </p>
           <CurrencyIcon type="primary" />
         </div>
         {placeType === "first" || placeType === "last" ? (
