@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
-import { shapeIngridientTypes } from '../../utils/types';
+import { shapeIngridientTypes } from "../../utils/types";
 
 import orderIngredientStyles from "./order-ingredient.module.css";
+
+import { useDispatch } from "react-redux";
+import { DELETE_ORDER_ITEM, MOVE_ITEM } from "../../services/actions/actions";
+
+import { useDrag, useDrop } from "react-dnd";
 
 import {
   CurrencyIcon,
@@ -11,12 +16,90 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function OrderIngredient({ item, placeType }) {
+function OrderIngredient({ item, index, placeType }) {
+  const ref = useRef(null);
+  const dispatch = useDispatch();
+  const { _id: itemId, type: itemType } = item;
+
+  // DND для сортировки
+  const [, drop] = useDrop({
+    accept: "orderItem",
+    hover: (item, monitor) => {
+      if (!ref.current) {
+        return;
+      }
+
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      // Снимаем мерки с контейнера ингредиента
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      // Ищем центр конйтенера ингредиента
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      // Позиция указателя мыши
+      const clientOffset = monitor.getClientOffset();
+      // Количество пикселей до верха контейнера ингредиента от указателя мыши
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      // Перемещение только тогда, когда мышь пересекла половину высоты элемента
+      // При перетаскивание вниз только тогда, когда курсор находится ниже 50% элемента
+      // При перетаскивание вверх только тогда, когда курсор находится выше 50% элемента
+
+      // Тянем вверх
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      // Тянем вниз
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      dispatch({
+        type: MOVE_ITEM,
+        itemId: item.itemId,
+        dragIndex: dragIndex,
+        hoverIndex: hoverIndex,
+      });
+
+      item.index = hoverIndex;
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag({
+    type: item.type !== "bun" ? "orderItem" : "bunItem",
+    item: { index, itemId, itemType },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const opacity = isDragging ? 0 : 1;
+  drag(drop(ref));
+
+  // Удаление ингредиента из списка заказа
+  const onDelete = () => {
+    dispatch({
+      type: DELETE_ORDER_ITEM,
+      listKey: item.listKey,
+      itemId: item._id,
+    });
+  };
+  // FIXME fix this
   return (
     <div
-      className={orderIngredientStyles.component}
+      ref={ref}
+      className={`${orderIngredientStyles.component} ${
+        item.type !== "bun" && orderIngredientStyles.draggableComponent
+      }`}
       style={{
         marginBottom: `${placeType === "last" && "0"}`,
+        opacity,
       }}
     >
       {placeType !== "first" && placeType !== "last" && (
@@ -51,13 +134,15 @@ function OrderIngredient({ item, placeType }) {
         <p
           className={`text text_type_main-default ${orderIngredientStyles.name}`}
         >
-          {item.name}
-          <br />
-          {placeType === "first"
-            ? "(верх)"
-            : placeType === "last"
-            ? "(низ)"
-            : ""}
+          <span>
+            {item.name ?? "Выберите любую булку и перетащите ее сюда"}
+          </span>
+          {placeType === "first" && (
+            <span className={orderIngredientStyles.place}> (верх)</span>
+          )}
+          {placeType === "last" && (
+            <span className={orderIngredientStyles.place}> (низ)</span>
+          )}
         </p>
         <div className={orderIngredientStyles.priceBlock}>
           <p
@@ -70,7 +155,9 @@ function OrderIngredient({ item, placeType }) {
         {placeType === "first" || placeType === "last" ? (
           <LockIcon type="secondary" />
         ) : (
-          <DeleteIcon type="primary" />
+          <span className={orderIngredientStyles.pointer}>
+            <DeleteIcon type="primary" onClick={onDelete} />
+          </span>
         )}
       </div>
     </div>
@@ -78,8 +165,8 @@ function OrderIngredient({ item, placeType }) {
 }
 
 OrderIngredient.propTypes = {
-  item: PropTypes.shape(shapeIngridientTypes).isRequired,
-  placeType: PropTypes.string
-}
+  item: PropTypes.shape(shapeIngridientTypes),
+  placeType: PropTypes.string,
+};
 
 export default OrderIngredient;

@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import modalStyles from "./modal.module.css";
 
 import ModalOverlay from "./modal-overlay";
 import ModalHeader from "./modal-header";
 
-function Modal({ children, headerTitle, onClose, isOpen }) {
+function Modal({ children, headerTitle, type, onClose }) {
   const modalRoot = document.getElementById("react-modals");
 
   // Установка слушателя для Escape
   useEffect(() => {
     const close = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
+      if (e.key === "Escape") {
+        onClose(type);
       }
     };
 
@@ -25,15 +25,13 @@ function Modal({ children, headerTitle, onClose, isOpen }) {
 
   return ReactDOM.createPortal(
     <div
-      className={`${modalStyles.modalContainer} ${
-        isOpen && modalStyles.modalContainer_opened
-      }`}
+      className={`${modalStyles.modalContainer} ${modalStyles.modalContainer_opened}`}
     >
       <div className={modalStyles.modal}>
-        <ModalHeader onClose={onClose}>{headerTitle}</ModalHeader>
+        <ModalHeader onClose={() => onClose(type)}>{headerTitle}</ModalHeader>
         {children}
       </div>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={() => onClose(type)} />
     </div>,
     modalRoot
   );
@@ -42,8 +40,8 @@ function Modal({ children, headerTitle, onClose, isOpen }) {
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
   headerTitle: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired
-}
+  type: PropTypes.string,
+  onClose: PropTypes.func,
+};
 
 export default Modal;

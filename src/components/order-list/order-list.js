@@ -1,23 +1,21 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import orderListStyles from "./order-list.module.css";
+
+import { useSelector } from "react-redux";
 
 import OrderIngredient from "../order-ingredient/order-ingredient";
 
-function OrderList({ items, exception }) {
+function OrderList() {
+  const { constructorIngridients } = useSelector((store) => store.burger);
+
   return (
     <div className={orderListStyles.orderList}>
-      {items && exception && items
-        .filter((i) => i.name !== exception.name)
-        .map((item) => (
-          <OrderIngredient key={item._id} item={item} />
-        ))}
+      {constructorIngridients &&
+        constructorIngridients
+          .filter((i) => i.type !== "bun")
+          .map((item, index) => <OrderIngredient key={item.listKey} index={index} item={item} />)}
     </div>
   );
-}
-
-OrderList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default OrderList;

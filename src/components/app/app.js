@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import appStyles from "./app.module.css";
 
 import AppHeader from "../app-header/app-header";
@@ -7,67 +8,49 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
 
-import api from "../../utils/api";
+import { useDispatch } from "react-redux";
+import {
+  DELETE_BURGER_ITEM_DATA,
+  CLOSE_ORDER_MODAL,
+} from "../../services/actions/actions";
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
+  const { isIngredientDetailsOpen } = useSelector((store) => store.ingredient);
+  const { isOrderDetailsOpen } = useSelector((store) => store.order);
 
-  // Отображение модальных окон
-  const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
-  const [isOrderDetails, setIsOrderDetails] = useState(false);
+  const dispatch = useDispatch();
 
-  // Информация для модального окна
-  const [modalInfo, setModalInfo] = useState({});
-
-  // Загрузка данных об ингредиентах с сервера
-  useEffect(() => {
-    api
-      .getIngredients()
-      .then((res) => setIngredients(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  // Отрктыие модального окна с информацией об игриденте
-  function openIngredientDetailsModal(ingreient) {
-    setIsIngredientDetailsOpen(true);
-    setModalInfo(ingreient);
-  }
-
-  // Открытие модального окна с информацией о заказе
-  function openOrderDetailsModal() {
-    setIsOrderDetails(true);
-  }
-
-  // Закрытие любого модального окна
-  function closeModal() {
-    setIsIngredientDetailsOpen(false);
-    setIsOrderDetails(false);
-
-    setModalInfo({});
-  }
+  const onClose = (type) => {
+    switch (type) {
+      case "ingredient": {
+        return dispatch({ type: DELETE_BURGER_ITEM_DATA });
+      }
+      case "order": {
+        return dispatch({ type: CLOSE_ORDER_MODAL });
+      }
+      default:
+        return;
+    }
+  };
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
 
-      <Main
-        items={ingredients}
-        openIngridientsModal={openIngredientDetailsModal}
-        openOrderDetailsModal={openOrderDetailsModal}
-      />
+      <Main />
 
       {isIngredientDetailsOpen && (
         <Modal
-          onClose={closeModal}
           headerTitle="Детали ингредиента"
-          isOpen={isIngredientDetailsOpen}
+          type="ingredient"
+          onClose={onClose}
         >
-          <IngredientDetails item={modalInfo} />
+          <IngredientDetails />
         </Modal>
       )}
 
-      {isOrderDetails && (
-        <Modal onClose={closeModal} isOpen={isOrderDetails}>
+      {isOrderDetailsOpen && (
+        <Modal type="order" onClose={onClose}>
           <OrderDetails />
         </Modal>
       )}

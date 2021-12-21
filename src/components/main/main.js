@@ -1,29 +1,20 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import mainStyles from "./main.module.css";
 
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
-function Main({ items, openIngridientsModal, openOrderDetailsModal }) {
+function Main() {
   return (
-    <main className={mainStyles.main}>
-      <BurgerConstructor
-        items={items}
-        openIngridientsModal={openIngridientsModal}
-      />
-      <BurgerIngredients
-        items={items}
-        openOrderDetailsModal={openOrderDetailsModal}
-      />
-    </main>
+    <DndProvider backend={HTML5Backend}>
+      <main className={mainStyles.main}>
+        <BurgerConstructor />
+        <BurgerIngredients />
+      </main>
+    </DndProvider>
   );
-}
-
-Main.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  openIngridientsModal: PropTypes.func.isRequired,
-  openOrderDetailsModal: PropTypes.func.isRequired
 }
 
 export default Main;
