@@ -12,6 +12,7 @@ import Login from '../../pages/login';
 import Register from '../../pages/register';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
+import Profile from '../../pages/profile';
 
 import {
   DELETE_BURGER_ITEM_DATA,
@@ -39,8 +40,9 @@ function App() {
 
   return (
     <div className={appStyles.app}>
-      <AppHeader />
       <Switch>
+        <AppHeader />
+
         <Route exact path="/">
           <Main />
         </Route>
@@ -55,6 +57,9 @@ function App() {
         </Route>
         <Route path="/reset-password">
           <ResetPassword />
+        </Route>
+        <Route path="/profile">
+          <Profile />
         </Route>
       </Switch>
 

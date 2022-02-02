@@ -1,11 +1,11 @@
-import React from 'react';
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useHistory } from 'react-router-dom';
+
 import appHeaderStyles from './app-header.module.css';
 import PropTypes from 'prop-types';
 
 import NavBar from '../nav-bar/nav-bar';
 import Profile from '../profile/profile';
-
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
   return (
@@ -16,11 +16,11 @@ function AppHeader() {
         <Profile />
       </section>
     </header>
-  )
+  );
 }
 
 AppHeader.propTypes = {
-  Logo: PropTypes.element
-}
+  Logo: PropTypes.element,
+};
 
 export default AppHeader;
